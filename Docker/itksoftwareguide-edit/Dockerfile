@@ -3,6 +3,10 @@ FROM jupyter/base-notebook:latest as jupyter
 FROM insighttoolkit/itksoftwareguide-bin:latest as itksoftwareguide
 MAINTAINER Matt McCormick <matt.mccormick@kitware.com>
 
+RUN apt-get update && apt-get install -y \
+  bash-completion \
+  liquidprompt
+
 # Import Jupyter configuration and binaries
 
 # Configure environment
@@ -36,7 +40,7 @@ RUN fix-permissions /ITKSoftwareGuide
 RUN fix-permissions /ITKSoftwareGuide-build
 
 EXPOSE 8888
-WORKDIR /ITKSoftwareGuide
+WORKDIR /
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
